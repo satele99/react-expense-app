@@ -1,0 +1,12 @@
+.widget-container {
+    margin-top: 25px;
+    row-gap: 15px;
+}
+hr {
+    width: 0;
+    height: 0;
+}
+.widgets {
+    display: flex;
+    justify-content: center;
+}

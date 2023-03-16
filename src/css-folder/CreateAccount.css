@@ -1,0 +1,25 @@
+.inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+    height: 35vw;
+} 
+.names {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+} 
+.anchor:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.create-button {
+    border: none !important;
+    background-color: lightskyblue !important;
+    color: #000 !important;
+}
+.create-button:hover {
+    background-color: rgb(89, 173, 225) !important;
+}

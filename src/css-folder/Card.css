@@ -1,0 +1,9 @@
+.cardbox {
+    width: 28rem;
+    height: 15rem;
+    /* display: flex;
+    flex-direction: column; */
+}
+.bg-green {
+    background-color: #3c7632;
+}
