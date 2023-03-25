@@ -13,6 +13,7 @@ import Expenses from './pages/Expenses';
 import Reports from './pages/Reports';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import axios from 'axios';
 
 const container = document.getElementById('root');
 const root = createRoot(container, +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

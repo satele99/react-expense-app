@@ -14,7 +14,7 @@ export default function ExpenseCard() {
         <Card className='cardbox'>
             <Card.Body>
                 <Card.Title>
-                    Individual Expense Name
+                    Individual Category Name
                     <Card.Subtitle className="text-muted">Current amount used of this expense budget.</Card.Subtitle>
                 </Card.Title>
                 <Card.Text>

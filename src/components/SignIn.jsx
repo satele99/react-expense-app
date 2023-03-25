@@ -1,19 +1,47 @@
 import '/Users/amirhali/repos/react-expenses/src/css-folder/SignIn.css'
 import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
-import { setModal, closeSignInModal } from '../features/signInSlice';
+import { setModal, closeSignInModal, openLogIn } from '../features/signInSlice';
+import { currentUser } from '../features/callApiSlice';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
 
 
 export default function SignIn() {
-    // const [show, setShow] = useState(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
-
+   
+    const userForm = document.getElementById('form');
+    
     const dispatch = useDispatch();
-    const close = (event) => {
+    const hide = () => {
         dispatch(closeSignInModal());
+    }
+    const close = (event) => {
+        event.preventDefault();
+        const username = document.getElementById('usernames');
+        const password = document.getElementById('passwords');
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const user = {
+            username: username.value,
+            password: password.value,
+            firstName: firstName.value,
+            lastName: lastName.value
+        }
+        axios.post('http://localhost:4000/user', user).then((response)=> {
+            console.log('in api call before conditional');
+            if(response.data === 'Success.'){
+                dispatch(closeSignInModal());
+                dispatch(currentUser(user));
+                console.log(user)
+                localStorage.setItem('user', JSON.stringify(user))
+            }
+        })
+        console.log(user);
+    }
+    const closeAndOpen = () => {
+        dispatch(closeSignInModal());
+        dispatch(openLogIn());
     }
     const modal = useSelector(setModal);
     if(modal.signInModal === false){
@@ -21,31 +49,30 @@ export default function SignIn() {
     }
     return (
         <>
-            <Modal show={modal.signInModal} onHide={close} animation={true}>
+            <Modal show={modal.signInModal} onHide={hide} animation={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Create An Account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <form>
+                <form id='form' onSubmit={close}>
                     <div class='names'>
-                        <input class="form-control me-2" type="text" placeholder="First Name"/>
-                        <input class="form-control me-2" type="text" placeholder="Last Name"/>
+                        <input id='firstName' class="form-control me-2" type="text" placeholder="First Name" required/>
+                        <input id='lastName' class="form-control me-2" type="text" placeholder="Last Name" required/>
                     </div>
                     <br/>
-                    <input class="form-control me-2" type="text" placeholder="Create Username" aria-label="Search"/>
+                    <input id='usernames' class="form-control me-2" type="text" placeholder="Create Username" aria-label="Search" required/>
                     <br/>
-                    <input class="form-control me-2" type="password" placeholder="Create Password" aria-label="Search"/>
+                    <input class="form-control me-2" type="password" placeholder="Create Password" aria-label="Search" required/>
                     <br/>
-                    <input class="form-control me-2" type="password" placeholder="Verify Password" aria-label="Search"/>
+                    <input id='passwords' class="form-control me-2" type="password" placeholder="Verify Password" aria-label="Search" required/>
                     <br/>
                 </form>
                 </Modal.Body>
                 <Modal.Footer>
                 <div class="d-grid gap-2 col-6 mx-auto footer">
-                        <Button className="button" onClick={close}>Create Account</Button>
-                        <p>Have An Account Already? <a class='anchor'>Log In.</a></p>
+                    <Button className="button" form='form' type='submit'>Create Account</Button>
+                    <p style={{textAlign: 'center'}}>Have An Account Already? <a class='anchor' onClick={closeAndOpen}>Log In.</a></p>
                 </div>
-                <div></div>
                 </Modal.Footer>
             </Modal>
         </>

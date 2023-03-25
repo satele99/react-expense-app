@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { showSettingModal, showSignInModal, openSideBar, setModal } from "../features/signInSlice";
+import { showSettingModal, showSignInModal, openSideBar, setModal, openSignOut, openUserProfile } from "../features/signInSlice";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
+import { loggedUser } from '../features/callApiSlice.js';
 import '/Users/amirhali/repos/react-expenses/src/css-folder/Sidebar.css'
 
 export default function Sidebar(props) {
@@ -11,15 +12,26 @@ export default function Sidebar(props) {
     const [active, setActive] = useState(null)
     const dispatch = useDispatch();
     const sideOpen = useSelector(setModal);
+    const user = useSelector(loggedUser);
     const toggle = () => {
         dispatch(openSideBar())
-        // setIsOpen(!isOpen);
     }
     const openSettingModal = () => {
         dispatch(showSettingModal())
     }
     const openSignInModal = () => {
-        dispatch(showSignInModal());
+        if(user === null){
+            dispatch(showSignInModal());
+        }else{
+            dispatch(openUserProfile());
+        }
+    }
+    const openSignOutModal = () => {
+        if(user != null){
+            dispatch(openSignOut());
+        }else{
+            alert('Please sign in or create an account.');
+        }
     }
 
     const navItem = [
@@ -65,6 +77,7 @@ export default function Sidebar(props) {
                 <div className="footer" style={{flexDirection: sideOpen.sideBarOpen ? "row" : "column", justifyContent: sideOpen.sideBarOpen ? "center" : "none",marginTop: sideOpen.sideBarOpen ? "270px" : "170px", fontSize: sideOpen.sideBarOpen ? "30px" : "20px"}}>
                     <i class="bi bi-person-circle profile" onClick={openSignInModal}></i>
                     <i class="bi bi-gear-fill profile" onClick={openSettingModal}></i>
+                    <i class="bi bi-box-arrow-left profile" onClick={openSignOutModal}></i>
                 </div>
             </div>
         </div>

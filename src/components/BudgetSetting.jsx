@@ -3,8 +3,13 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
 import React, { useState } from 'react';
 import { setModal, closeSettingModal } from '../features/signInSlice';
+import { loggedUser } from '../features/callApiSlice';
+import { setTotalBudget } from '../features/budgetInfoSlice';
+import { addCategory } from '../features/categorySlice';
 import Collapse from 'react-bootstrap/Collapse';
 import { Button } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
 export default function BudgetSetings() {
 
@@ -13,10 +18,42 @@ export default function BudgetSetings() {
     const [catOpen, setCatOpen] = useState(false);
     const [exOpen, setExOpen] = useState(false);
     const dispatch = useDispatch();
+    const modal = useSelector(setModal);
+    const user = useSelector(loggedUser);
     const close = (event) => {
         dispatch(closeSettingModal());
     }
-    const modal = useSelector(setModal);
+    const setBudget = (event)=> {
+        event.preventDefault();
+        const amount = document.getElementById('total-budget').value;
+        axios.put(`http://localhost:4000/total-budget/${user.username}/${amount}`).then((response)=>{
+            if(response.data === 'Budget updated.'){
+                dispatch(setTotalBudget(amount));
+                alert(`budget for ${user.username} updated`);
+            }else{
+                alert('unsuccessful');
+            }
+        })
+
+    }
+    const setCategory = (event) => {
+        event.preventDefault();
+        const name = document.getElementById('catName').value;
+        const amount = document.getElementById('catAmount').value;
+        const uuid = crypto.randomUUID()
+        const data = {
+            username: user.username,
+            category: name,
+            catAmount: amount,
+            uuid: uuid
+        }
+        axios.post(`http://localhost:4000/category`, data).then((response)=> {
+            if(response.data != 'error'){
+                console.log('success')
+                dispatch(addCategory(response.data))
+            }
+        })
+    }
     if(modal.settingModal === false){
         return null
     }
@@ -32,12 +69,12 @@ export default function BudgetSetings() {
                         <span><i class="bi bi-caret-down"></i></span>
                     </div>
                     <Collapse in={open}>
-                            <div id='set-budget'>
-                                Amount: <input class="form-control mr-sm-2" type='text'/>
+                            <form id='set-budget' onSubmit={setBudget}>
+                                Total Amount: <input class="form-control mr-sm-2" id='total-budget' type='number'/>
                                 <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
-                                    <Button className='button'>Save Changes</Button>
+                                    <Button className='button' form='set-budget' type='submit'>Save Changes</Button>
                                 </div>
-                            </div>
+                            </form>
                     </Collapse>
                 </div>
                 <div>
@@ -46,12 +83,13 @@ export default function BudgetSetings() {
                         <span><i class="bi bi-caret-down"></i></span>
                     </div>
                     <Collapse in={catOpen}>
-                        <div id='set-category'>
-                            Amount: <input class="form-control mr-sm-2" type='text'/>
+                        <form id='set-category' onSubmit={setCategory}>
+                            Category Name: <input id='catName' class="form-control mr-sm-2" type='text'/>
+                            Category Budget Amount: <input id='catAmount' class="form-control mr-sm-2" type='number'/>
                             <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
-                                <Button className='button'>Save Changes</Button>
+                                <Button className='button' form='set-category' type='submit'>Save Changes</Button>
                             </div>
-                        </div>
+                        </form>
                     </Collapse>
                 </div>
                 <div>
@@ -60,12 +98,18 @@ export default function BudgetSetings() {
                         <span><i class="bi bi-caret-down"></i></span>
                     </div>
                     <Collapse in={exOpen}>
-                        <div id='set-expense'>
-                            Amount: <input class="form-control mr-sm-2" type='text'/>
+                        <form id='set-expense'>
+                            Add Expense To: <Form.Select aria-label="Default select example">
+                                                <option value='0'>Zero</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </Form.Select>
+                            Expense Name: <input class="form-control mr-sm-2" type='text'/>
                             <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
                                 <Button className='button'>Save Changes</Button>
                             </div>
-                        </div>
+                        </form>
                     </Collapse>
                 </div>
             </Modal.Body>
