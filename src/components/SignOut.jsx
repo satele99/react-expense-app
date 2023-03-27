@@ -1,6 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { closeSignOut, openSignOut, setModal } from '../features/signInSlice';
 import { clearTotalBudget } from '../features/budgetInfoSlice';
+import { clearCategory } from '../features/categorySlice';
 import { resetUser } from '../features/callApiSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
@@ -17,6 +18,7 @@ export default function SignOut() {
         dispatch(resetUser());
         dispatch(closeSignOut());
         dispatch(clearTotalBudget());
+        dispatch(clearCategory());
     }
     const modal = useSelector(setModal)
     if(modal.signOutOpen === false){

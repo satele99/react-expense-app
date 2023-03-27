@@ -9,15 +9,17 @@ import NotLogged from "../components/NotLoggedIn"
 import SignOut from '../components/SignOut';
 import { useSelector } from 'react-redux';
 import { loggedUser } from '../features/callApiSlice.js';
+import { setModal } from "../features/signInSlice";
 // import { Stack } from 'react-bootstrap';
 
 export default function Category() {
     const loggedInUser = useSelector(loggedUser);
+    const sideOpen = useSelector(setModal);
     if(loggedInUser === null){
         return (
             <div className='main'>
                 <Sidebar isActive={true}/>
-                <div className="content">
+                <div className="content" style={{marginLeft: sideOpen.sideBarOpen ? "300px" : "0px"}}>
                     <NotLogged/>
                 </div>
                 <BudgetSetings/>
@@ -30,7 +32,7 @@ export default function Category() {
     return(
         <div className='main'>
             <Sidebar isActive={true}/>
-            <div className="content">
+            <div className="content" style={{marginLeft: sideOpen.sideBarOpen ? "300px" : "0px", marginTop: '25px'}}>
                 <CategoryForm/>
                 <CategoryTable/>
             </div>

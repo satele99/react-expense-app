@@ -3,7 +3,7 @@ import { ProgressBar, Button, Stack } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import '/Users/amirhali/repos/react-expenses/src/css-folder/Card.css'
 
-export default function ExpenseCard() {
+export default function ExpenseCard(props) {
 
     const navigate = useNavigate();
     const routeChange = (string) => {
@@ -14,12 +14,12 @@ export default function ExpenseCard() {
         <Card className='cardbox'>
             <Card.Body>
                 <Card.Title>
-                    Individual Category Name
+                    {props.name}
                     <Card.Subtitle className="text-muted">Current amount used of this expense budget.</Card.Subtitle>
                 </Card.Title>
                 <Card.Text>
-                    <div>200 / 1000</div>
-                    <ProgressBar className='rounded-pill' min={0} max={500} now={200}/>
+                    <div>200 / {props.budget}</div>
+                    <ProgressBar className='rounded-pill' min={0} max={props.budget} now={50}/>
                 </Card.Text>
                 <Stack direction='horizontal' gap={2} className="row-md-5 mx-auto" style={{display: 'flex', justifyContent: 'flex-end'}}>
                     <Button className='button' onClick={()=>{routeChange("expenses")}}>View Expenses</Button>

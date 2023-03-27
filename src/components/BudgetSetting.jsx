@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { setModal, closeSettingModal } from '../features/signInSlice';
 import { loggedUser } from '../features/callApiSlice';
 import { setTotalBudget } from '../features/budgetInfoSlice';
-import { addCategory } from '../features/categorySlice';
+import { addCategory, getCategories } from '../features/categorySlice';
 import Collapse from 'react-bootstrap/Collapse';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -13,13 +13,16 @@ import axios from 'axios';
 
 export default function BudgetSetings() {
 
-    const currentBudget = '$2000'
     const [open, setOpen] = useState(false);
     const [catOpen, setCatOpen] = useState(false);
     const [exOpen, setExOpen] = useState(false);
     const dispatch = useDispatch();
     const modal = useSelector(setModal);
     const user = useSelector(loggedUser);
+    const categories = useSelector(getCategories);
+    // const category = JSON.parse(categories);
+
+
     const close = (event) => {
         dispatch(closeSettingModal());
     }
@@ -38,22 +41,30 @@ export default function BudgetSetings() {
     }
     const setCategory = (event) => {
         event.preventDefault();
-        const name = document.getElementById('catName').value;
-        const amount = document.getElementById('catAmount').value;
+        const name = document.getElementById('catName');
+        const amount = document.getElementById('catAmount');
         const uuid = crypto.randomUUID()
         const data = {
             username: user.username,
-            category: name,
-            catAmount: amount,
+            category: name.value,
+            catAmount: amount.value,
             uuid: uuid
         }
         axios.post(`http://localhost:4000/category`, data).then((response)=> {
-            if(response.data != 'error'){
-                console.log('success')
-                dispatch(addCategory(response.data))
+            if(response.data === 'Success'){
+                axios.get(`http://localhost:4000/get-category/${data.uuid}`).then((response)=> {
+                    dispatch(addCategory(response.data))
+                })
             }
         })
     }
+    const setExpenses = (event) => {
+        event.preventDefault();
+        const category = document.getElementById('select').value;
+        const expenseName = document.getElementById('expense-name').value;
+        console.log(category+" "+expenseName)
+    }
+
     if(modal.settingModal === false){
         return null
     }
@@ -99,15 +110,21 @@ export default function BudgetSetings() {
                     </div>
                     <Collapse in={exOpen}>
                         <form id='set-expense'>
-                            Add Expense To: <Form.Select aria-label="Default select example">
-                                                <option value='0'>Zero</option>
+                            Add Expense To: <Form.Select aria-label="Default select example" id='select'>
+                                                <option value='0'>--Select A Category--</option>
+                                               {
+                                                categories.map((item)=> (
+                                                    <option value={item.categoryName}>{item.categoryName}</option>
+                                                ))
+                                               }
+                                                {/* <option value='0'>Zero</option>
                                                 <option value="1">One</option>
                                                 <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                                <option value="3">Three</option> */}
                                             </Form.Select>
-                            Expense Name: <input class="form-control mr-sm-2" type='text'/>
+                            Expense Name: <input class="form-control mr-sm-2" id='expense-name' type='text'/>
                             <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
-                                <Button className='button'>Save Changes</Button>
+                                <Button className='button' form='set-expense' type='submit' onClick={setExpenses}>Save Changes</Button>
                             </div>
                         </form>
                     </Collapse>

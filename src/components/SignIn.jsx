@@ -31,10 +31,16 @@ export default function SignIn() {
         axios.post('http://localhost:4000/user', user).then((response)=> {
             console.log('in api call before conditional');
             if(response.data === 'Success.'){
-                dispatch(closeSignInModal());
-                dispatch(currentUser(user));
-                console.log(user)
-                localStorage.setItem('user', JSON.stringify(user))
+                axios.get(`http://localhost:4000/user/log/${user.username}`).then((response)=> {
+                    if(response.data === 'Not found.'){
+                        alert('no user')
+                    }else{
+                        dispatch(closeSignInModal());
+                        localStorage.setItem('user', JSON.stringify(response.data));
+                        dispatch(currentUser(response.data));
+                        // dispatch(setTotalBudget(response.data.budget));
+                    }
+                })
             }
         })
         console.log(user);

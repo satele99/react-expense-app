@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { loggedUser } from '../features/callApiSlice.js';
 import { useDispatch } from "react-redux";
 import { closeUserProfile, setModal } from '../features/signInSlice';
+import { getTotalBudget } from '../features/budgetInfoSlice.js';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 
@@ -9,7 +10,9 @@ import { Button } from 'react-bootstrap';
 export default function UserProfile(){
     const dispatch = useDispatch();
     const modal = useSelector(setModal);
-    const loggedInUser = useSelector(loggedUser)
+    const loggedInUser = useSelector(loggedUser);
+    const totalBudget = useSelector(getTotalBudget);
+
     const hide = ()=>{
         dispatch(closeUserProfile());
     }
@@ -30,7 +33,7 @@ export default function UserProfile(){
                     First Name: <input type='text' class="form-control me-2" value={loggedInUser.firstName}/>
                     Last Name: <input type='text' class="form-control me-2" value={loggedInUser.lastName}/>
                     <br/>
-                    Total Budget: <input type='text' class="form-control me-2" value={'$2000'}/>
+                    Total Budget: <input type='text' class="form-control me-2" value={totalBudget.totalBudget}/>
                 </form>
                 </Modal.Body>
                 <Modal.Footer>

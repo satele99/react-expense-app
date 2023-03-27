@@ -10,11 +10,14 @@ export const categorySlice = createSlice({
     reducers: {
         addCategory: (state, action) => {
             state.value.push(action.payload)
-        }
+        },
+        clearCategory: (state) => {
+            state.value = []
+        },
     }
 })
 
-export const { addCategory } = categorySlice.actions;
+export const { addCategory, clearCategory } = categorySlice.actions;
 export const getCategories = (state) => state.category.value;
 
 export default categorySlice.reducer;

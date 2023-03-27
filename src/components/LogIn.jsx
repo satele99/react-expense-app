@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import { setModal, closeLogIn, showSignInModal } from '../features/signInSlice';
 import { setTotalBudget } from '../features/budgetInfoSlice';
+import { getCategories, addCategory } from '../features/categorySlice';
 import { currentUser } from '../features/callApiSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
@@ -10,6 +11,7 @@ import axios from 'axios';
 export default function LogIn() {
 
     const dispatch = useDispatch();
+    const categories = useSelector(getCategories);
     const close = (event) => {
         event.preventDefault();
         const username = document.getElementById('user1');
@@ -19,13 +21,21 @@ export default function LogIn() {
             password: password.value
         }
         axios.get(`http://localhost:4000/user/log/${user.username}`).then((response)=> {
-            if(response.data === 'Not found.'){
-                alert('no user')
-            }else{
+            if(response.data !== 'Not found.'){
                 dispatch(closeLogIn());
                 localStorage.setItem('user', JSON.stringify(response.data));
                 dispatch(currentUser(response.data));
                 dispatch(setTotalBudget(response.data.budget));
+                axios.get(`http://localhost:4000/reload-category/${response.data.id}`).then((response)=> {
+                        if(response.data !== 'Not Found.' && categories.length === 0 ){
+                            console.log('hello')
+                            response.data.map((item)=> {
+                                dispatch(addCategory(item))
+                            })
+                        }
+                    })
+            }else{
+                alert('no user')
             }
         })
     }

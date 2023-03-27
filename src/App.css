@@ -5,6 +5,8 @@
 }
 .main{
   display: flex;
+  height: 100vh;
+  position: relative;
 }
 .content {
   display: flex;
@@ -12,11 +14,17 @@
   align-items: center;
   text-align: center;
   width: 100vw;
-  margin-top: 25px;
+  height: 100vh;
+  /* margin-top: 25px; */
   gap: 75px;
+  transition: all .5s;
+  /* padding: 20px;
+  padding-bottom: 20px; */
 }
 .side-container {
   display: flex;
+  height: 100vh;
+  position: fixed;
 }
 .sidebar {
   background: #000;

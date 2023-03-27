@@ -1,9 +1,14 @@
+import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { showSettingModal, showSignInModal, openSideBar, setModal, openSignOut, openUserProfile } from "../features/signInSlice";
 import { useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { loggedUser } from '../features/callApiSlice.js';
+import { currentUser } from "../features/callApiSlice.js";
+import { setTotalBudget } from '../features/budgetInfoSlice';
+import { addCategory, getCategories } from "../features/categorySlice";
 import '/Users/amirhali/repos/react-expenses/src/css-folder/Sidebar.css'
 
 export default function Sidebar(props) {
@@ -13,8 +18,35 @@ export default function Sidebar(props) {
     const dispatch = useDispatch();
     const sideOpen = useSelector(setModal);
     const user = useSelector(loggedUser);
+    const categories = useSelector(getCategories);
+
+    useEffect(()=> {
+        const loggedInUser = localStorage.getItem("user");
+        if(loggedInUser){
+            // console.log(categories[0][0].categoryName)
+            const foundUser = JSON.parse(loggedInUser);
+            // const budget = localStorage.getItem('budget');
+            dispatch(currentUser(foundUser));
+            const username = foundUser.username;
+            axios.get(`http://localhost:4000/user/log/${username}`).then((response)=>{
+                if(response.data != 'Not found.'){
+                    dispatch(setTotalBudget(response.data.budget))
+                    axios.get(`http://localhost:4000/reload-category/${foundUser.id}`).then((response)=> {
+                        if(response.data !== 'Not Found.' && categories.length === 0){
+                            const data = response.data;
+                            data.map((item)=> {
+                                dispatch(addCategory(item))
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    }, [])
+
     const toggle = () => {
         dispatch(openSideBar())
+        
     }
     const openSettingModal = () => {
         dispatch(showSettingModal())
