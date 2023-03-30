@@ -3,6 +3,7 @@ import modalReducer from '../features/signInSlice';
 import callApiReducer from '../features/callApiSlice.js'
 import budgetInfoReducer from '../features/budgetInfoSlice';
 import categoryReducer from '../features/categorySlice';
+import expenseReducer from '../features/expenseSlice';
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         callApi: callApiReducer,
         budget: budgetInfoReducer,
         category: categoryReducer,
+        expense: expenseReducer,
     }
 })
 

@@ -8,6 +8,7 @@ import SignOut from '../components/SignOut';
 import { useSelector } from 'react-redux';
 import { loggedUser } from '../features/callApiSlice.js';
 import { setModal } from "../features/signInSlice";
+import Welcome from "../components/Welcome";
 
 
 export default function Expenses() {
@@ -32,7 +33,7 @@ export default function Expenses() {
         <div className='main'>
             <Sidebar isActive={true}/>
             <div className="content" style={{marginLeft: sideOpen.sideBarOpen ? "300px" : "0px", marginTop: '25px'}}>
-                <h1>Expenses</h1>
+                <Welcome header={`${loggedInUser.firstName}'s Expenses`}/>
             </div>
             <BudgetSetings/>
             {/* <SignIn/> */}

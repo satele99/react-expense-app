@@ -13,7 +13,7 @@ export default function Greeting() {
             <NotLogged/>
         )
     }else {
-        return <Welcome/>
+        return <Welcome header={`Welcome ${user.firstName}!`}/>
     }
     
 }

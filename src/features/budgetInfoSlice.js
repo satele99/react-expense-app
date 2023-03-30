@@ -2,7 +2,8 @@ import {  createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     value: {
-        totalBudget: 0
+        totalBudget: 0,
+        categoryBudget: [],
     }
 };
 

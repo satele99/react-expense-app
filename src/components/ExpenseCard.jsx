@@ -10,6 +10,10 @@ export default function ExpenseCard(props) {
         let path = string;
         navigate(path);
     }
+    const formatThis = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    })
     return (
         <Card className='cardbox'>
             <Card.Body>
@@ -18,8 +22,8 @@ export default function ExpenseCard(props) {
                     <Card.Subtitle className="text-muted">Current amount used of this expense budget.</Card.Subtitle>
                 </Card.Title>
                 <Card.Text>
-                    <div>200 / {props.budget}</div>
-                    <ProgressBar className='rounded-pill' min={0} max={props.budget} now={50}/>
+                    <div>{formatThis.format(props.spent)} /{formatThis.format(props.budget)} </div>
+                    <ProgressBar className='rounded-pill' min={0} max={props.budget} now={props.spent}/>
                 </Card.Text>
                 <Stack direction='horizontal' gap={2} className="row-md-5 mx-auto" style={{display: 'flex', justifyContent: 'flex-end'}}>
                     <Button className='button' onClick={()=>{routeChange("expenses")}}>View Expenses</Button>

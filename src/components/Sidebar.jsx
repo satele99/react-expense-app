@@ -9,6 +9,7 @@ import { loggedUser } from '../features/callApiSlice.js';
 import { currentUser } from "../features/callApiSlice.js";
 import { setTotalBudget } from '../features/budgetInfoSlice';
 import { addCategory, getCategories } from "../features/categorySlice";
+import { addExpense } from '../features/expenseSlice';
 import '/Users/amirhali/repos/react-expenses/src/css-folder/Sidebar.css'
 
 export default function Sidebar(props) {
@@ -38,6 +39,15 @@ export default function Sidebar(props) {
                                 dispatch(addCategory(item))
                             })
                         }
+                    }).then(()=>{
+                        axios.get(`http://localhost:4000/reload-expense/${foundUser.id}`).then((response)=> {
+                        if(response.data !== 'Not Found.' && categories.length === 0){
+                            const data = response.data;
+                            data.map((item)=> {
+                                dispatch(addExpense(item))
+                            })
+                        }
+                        })
                     })
                 }
             })
