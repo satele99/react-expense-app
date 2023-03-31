@@ -16,6 +16,10 @@ export default function Welcome(props) {
     const expenses = useSelector(getExpenses);
     const budget = useSelector(getCategories);
 
+    function getTotalExpense(categoryName){
+        return expenses.filter(item => item.expenseCategory === categoryName);
+    }
+
     return (
        <Container className='widget-container'>
         <Stack gap={4}>
@@ -25,10 +29,12 @@ export default function Welcome(props) {
             </Row>
             <Row>
                 {
-                    expenses.map((item)=> {
-                
+                    budget.map((item, index)=> {
+                        const total = getTotalExpense(item.categoryName).reduce((total, expense) => total + parseFloat(expense.expenseAmount), 0)
+                        // const result = parseFloat(total)
+                        // console.log(result);
                         return (
-                        <Col sm={true} className='widgets'><ExpenseCard name={item.expenseName} spent={item.expenseAmount} budget={item.expenseBudget}/></Col>
+                            <Col sm={true} className='widgets'><ExpenseCard name={item.categoryName} spent={total} budget={item.categoryBudget}/></Col>
                         )
                     })
                     

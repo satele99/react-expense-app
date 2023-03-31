@@ -7,6 +7,7 @@ import { loggedUser } from '../features/callApiSlice';
 import { setTotalBudget } from '../features/budgetInfoSlice';
 import { addCategory, getCategories } from '../features/categorySlice';
 import { addExpense } from '../features/expenseSlice';
+import { getTotalBudget } from '../features/budgetInfoSlice';
 import Collapse from 'react-bootstrap/Collapse';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -21,6 +22,7 @@ export default function BudgetSetings() {
     const modal = useSelector(setModal);
     const user = useSelector(loggedUser);
     const categories = useSelector(getCategories);
+    const budget = useSelector(getTotalBudget);
     // const category = JSON.parse(categories);
 
 
@@ -115,7 +117,7 @@ export default function BudgetSetings() {
                     <Collapse in={catOpen}>
                         <form id='set-category' onSubmit={setCategory}>
                             Category Name: <input id='catName' class="form-control mr-sm-2" type='text'/>
-                            Category Max Budget: <input id='catAmount' class="form-control mr-sm-2" type='number' step={0.01}/>
+                            Category Max Budget: <input id='catAmount' class="form-control mr-sm-2" type='number' max={budget.totalBudget} step={0.01}/>
                             <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
                                 <Button className='button' form='set-category' type='submit'>Save Changes</Button>
                             </div>

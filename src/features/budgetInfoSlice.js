@@ -3,7 +3,7 @@ import {  createSlice } from '@reduxjs/toolkit';
 const initialState = {
     value: {
         totalBudget: 0,
-        categoryBudget: [],
+        currentTotalSpent: 0,
     }
 };
 
@@ -17,11 +17,14 @@ export const budgetInfoSlice = createSlice({
         }, 
         clearTotalBudget: (state) => {
             state.value.totalBudget = 0;
+        },
+        addCurrentSpent: (state, action) => {
+            state.value.currentTotalSpent = action.payload;
         }
     }
 });
 
-export const { setTotalBudget, clearTotalBudget } = budgetInfoSlice.actions;
+export const { setTotalBudget, clearTotalBudget, addCurrentSpent } = budgetInfoSlice.actions;
 export const getTotalBudget = (state) => state.budget.value;
 
 export default budgetInfoSlice.reducer;

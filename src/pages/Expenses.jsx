@@ -33,7 +33,7 @@ export default function Expenses() {
         <div className='main'>
             <Sidebar isActive={true}/>
             <div className="content" style={{marginLeft: sideOpen.sideBarOpen ? "300px" : "0px", marginTop: '25px'}}>
-                <Welcome header={`${loggedInUser.firstName}'s Expenses`}/>
+                <Welcome header={`${loggedInUser.firstName}'s Expense Categories`}/>
             </div>
             <BudgetSetings/>
             {/* <SignIn/> */}
