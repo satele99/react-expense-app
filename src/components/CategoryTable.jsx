@@ -39,7 +39,6 @@ export default function CategoryTable() {
                         <th>Expense Name</th>
                         <th>Expense Category</th>
                         <th>$$ Amount</th>
-                        <th>Edit</th>
                         <th>Remove</th>
                     </tr>
                 </thead>
@@ -53,7 +52,6 @@ export default function CategoryTable() {
                                         <td>{item.expenseName}</td>
                                         <td>{item.expenseCategory}</td>
                                         <td>{formatThis.format(item.expenseAmount)}</td>
-                                        <td><i style={{cursor: 'pointer'}} class="bi bi-pencil-square"></i></td>
                                         <td><i style={{cursor: 'pointer'}} class="bi bi-trash3-fill" onClick={()=>{deleteThis(item.uuid)}}></i></td>
                                     </tr>
                                 </tbody>
@@ -66,7 +64,6 @@ export default function CategoryTable() {
                                         <td>{item.expenseName}</td>
                                         <td>{item.expenseCategory}</td>
                                         <td>{formatThis.format(item.expenseAmount)}</td>
-                                        <td><i style={{cursor: 'pointer'}} class="bi bi-pencil-square"></i></td>
                                         <td><i style={{cursor: 'pointer'}} class="bi bi-trash3-fill" onClick={()=>{deleteThis(item.uuid)}}></i></td>
                                     </tr>
                                 </tbody>
