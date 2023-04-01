@@ -79,7 +79,7 @@ export default function Sidebar(props) {
     const navItem = [
         {
         path: '/',
-        icon: <i class="bi bi-house-door"></i>,
+        icon: <i class="bi bi-grid-3x3-gap-fill"></i>,
         linkText: 'Home'
         },
     {
@@ -91,19 +91,14 @@ export default function Sidebar(props) {
         path: '/expenses',
         icon: <i class="bi bi-pie-chart"></i>,
         linkText: 'Expenses'
-    },
-    {
-        path: '/reports',
-        icon: <i class="bi bi-graph-up-arrow"></i>,
-        linkText: 'Analytics'
-    },
+    }
     ]
 
     return (
         <div className="side-container">
             <div style={{width: sideOpen.sideBarOpen ? "300px" : "50px"}} className="sidebar">
                 <div className="top_section" style={{justifyContent: sideOpen.sideBarOpen ? "center": "none"}}>
-                    <h1 className="logo" style={{display: sideOpen.sideBarOpen ? "block" : "none"}}>Budget App</h1>
+                    <h1 className="logo" style={{display: sideOpen.sideBarOpen ? "block" : "none"}}>Wallet App</h1>
                     <div className="bar" style={{marginLeft: sideOpen.sideBarOpen ? "90px" : "0px", display: sideOpen.sideBarOpen ? "flex":"block"}}>
                     <i class="bi bi-list" onClick={toggle}></i>
                     </div>

@@ -3,12 +3,14 @@ import '/Users/amirhali/repos/react-expenses/src/css-folder/CategoryTable.css'
 import { useDispatch } from 'react-redux';
 import { getCategories } from '../features/categorySlice';
 import { getExpenses, deleteExpense } from '../features/expenseSlice';
+import { getFilter } from '../features/filterInfoSlice';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 export default function CategoryTable() {
     const categories = useSelector(getCategories);
     const expenses = useSelector(getExpenses);
+    const filterParam = useSelector(getFilter);
     const dispatch = useDispatch();
 
     function getTotalExpense(categoryName){
@@ -43,18 +45,33 @@ export default function CategoryTable() {
                 </thead>
                 {
                     expenses.map((item, index) => {
-                        return (
-                            <tbody>
-                                <tr>
-                                    <td>{index}</td>
-                                    <td>{item.expenseName}</td>
-                                    <td>{item.expenseCategory}</td>
-                                    <td>{formatThis.format(item.expenseAmount)}</td>
-                                    <td><i style={{cursor: 'pointer'}} class="bi bi-pencil-square"></i></td>
-                                    <td><i style={{cursor: 'pointer'}} class="bi bi-trash3-fill" onClick={()=>{deleteThis(item.uuid)}}></i></td>
-                                </tr>
-                        </tbody>
-                        )
+                        if(item.expenseCategory === filterParam){
+                            return (
+                                <tbody>
+                                    <tr>
+                                        <td>{index}</td>
+                                        <td>{item.expenseName}</td>
+                                        <td>{item.expenseCategory}</td>
+                                        <td>{formatThis.format(item.expenseAmount)}</td>
+                                        <td><i style={{cursor: 'pointer'}} class="bi bi-pencil-square"></i></td>
+                                        <td><i style={{cursor: 'pointer'}} class="bi bi-trash3-fill" onClick={()=>{deleteThis(item.uuid)}}></i></td>
+                                    </tr>
+                                </tbody>
+                            )
+                        }else if(filterParam === 'Show All'){
+                            return (
+                                <tbody>
+                                    <tr>
+                                        <td>{index}</td>
+                                        <td>{item.expenseName}</td>
+                                        <td>{item.expenseCategory}</td>
+                                        <td>{formatThis.format(item.expenseAmount)}</td>
+                                        <td><i style={{cursor: 'pointer'}} class="bi bi-pencil-square"></i></td>
+                                        <td><i style={{cursor: 'pointer'}} class="bi bi-trash3-fill" onClick={()=>{deleteThis(item.uuid)}}></i></td>
+                                    </tr>
+                                </tbody>
+                            )
+                        }
                     })
                 }
             </Table>

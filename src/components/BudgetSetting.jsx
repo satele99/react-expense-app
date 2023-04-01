@@ -23,7 +23,8 @@ export default function BudgetSetings() {
     const user = useSelector(loggedUser);
     const categories = useSelector(getCategories);
     const budget = useSelector(getTotalBudget);
-    // const category = JSON.parse(categories);
+    const setTotals = categories.reduce((total, item)=> total + parseFloat(item.categoryBudget), 0)
+
 
 
     const close = (event) => {
@@ -117,7 +118,7 @@ export default function BudgetSetings() {
                     <Collapse in={catOpen}>
                         <form id='set-category' onSubmit={setCategory}>
                             Category Name: <input id='catName' class="form-control mr-sm-2" type='text'/>
-                            Category Max Budget: <input id='catAmount' class="form-control mr-sm-2" type='number' max={budget.totalBudget} step={0.01}/>
+                            Category Max Budget: <input id='catAmount' class="form-control mr-sm-2" type='number' max={setTotals} step={0.01}/>
                             <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
                                 <Button className='button' form='set-category' type='submit'>Save Changes</Button>
                             </div>
@@ -138,10 +139,6 @@ export default function BudgetSetings() {
                                                     <option value={item.categoryBudget}>{item.categoryName}</option>
                                                 ))
                                                }
-                                                {/* <option value='0'>Zero</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option> */}
                                             </Form.Select>
                             Expense Name: <input class="form-control mr-sm-2" id='expense-name' type='text'/>
                             Expense Amount: <input class="form-control mr-sm-2" id='expense-amount' type='number' step={0.01}/>

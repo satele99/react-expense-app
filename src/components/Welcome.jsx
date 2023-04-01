@@ -24,23 +24,15 @@ export default function Welcome(props) {
        <Container className='widget-container'>
         <Stack gap={4}>
             <h1>{props.header}</h1>
-            <Row>
-                <Col sm={true} className='widgets'><CardBox/></Col>
-            </Row>
+            <div style={{display: 'flex', justifyContent: 'center'}}>{ props.children }</div>
             <Row>
                 {
                     budget.map((item, index)=> {
                         const total = getTotalExpense(item.categoryName).reduce((total, expense) => total + parseFloat(expense.expenseAmount), 0)
-                        // const result = parseFloat(total)
-                        // console.log(result);
                         return (
                             <Col sm={true} className='widgets'><ExpenseCard name={item.categoryName} spent={total} budget={item.categoryBudget}/></Col>
                         )
                     })
-                    
-                    
-                    // const limit = budget.filter(({ categoryBudget })=> categoryBudget.includes(item.expenseCategory))
-                    // console.log(limit);
                 }
             </Row>
         </Stack>

@@ -8,6 +8,7 @@ import Greeting from './layouts/Greeting';
 import LogIn from "/Users/amirhali/repos/react-expenses/src/components/LogIn.jsx"
 import { useSelector } from 'react-redux';
 import { setModal } from './features/signInSlice';
+import CardBox from './components/Card';
 
 
 function App() {

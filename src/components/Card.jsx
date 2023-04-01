@@ -8,6 +8,7 @@ import { showSettingModal } from "../features/signInSlice";
 import { Button, Stack } from 'react-bootstrap';
 import '/Users/amirhali/repos/react-expenses/src/css-folder/Card.css'
 import { getCategories } from '../features/categorySlice';
+import { Link } from 'react-router-dom';
 
 export default function CardBox() {
 
@@ -18,7 +19,7 @@ export default function CardBox() {
     const currentSum = expenses.reduce((total, item)=> {return total + parseFloat(item.expenseAmount)}, 0)
     
     dispatch(addCurrentSpent(currentSum));
-   
+    const available = budget.totalBudget - currentSum
 
     const openSettingModal = () => {
         
@@ -33,13 +34,13 @@ export default function CardBox() {
             <Card.Body>
                 <Card.Title>
                     Max Budget
-                    <Card.Subtitle className="text-muted">Total spent of your current total budget</Card.Subtitle>
+                    <Card.Subtitle className="text-muted">Spent {formatThis.format(currentSum)} of your Total Budget({formatThis.format(budget.totalBudget)}) </Card.Subtitle>
                 </Card.Title>
                 <Card.Text>
-                    <div>{formatThis.format(currentSum)} / {formatThis.format(budget.totalBudget)}</div>
+                    <div>Total Amount Available: {formatThis.format(available)}</div>
                 </Card.Text>
                 <Stack direction='horizontal' gap={2} className="row-md-5 mx-auto" style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button className='button' onClick={()=>{openSettingModal()}}>Go To Settings</Button>
+                    <Link class="btn btn-outline-info blackf" onClick={()=>{openSettingModal()}}>Go To Settings</Link>
                 </Stack>
             </Card.Body>
         </Card>

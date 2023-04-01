@@ -4,6 +4,7 @@ import callApiReducer from '../features/callApiSlice.js'
 import budgetInfoReducer from '../features/budgetInfoSlice';
 import categoryReducer from '../features/categorySlice';
 import expenseReducer from '../features/expenseSlice';
+import filterInfoReducer from '../features/filterInfoSlice';
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         budget: budgetInfoReducer,
         category: categoryReducer,
         expense: expenseReducer,
+        filter: filterInfoReducer
     }
 })
 
