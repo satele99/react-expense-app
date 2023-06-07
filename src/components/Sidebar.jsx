@@ -86,12 +86,12 @@ export default function Sidebar(props) {
     {
         path: '/category',
         icon: <i class="bi bi-wallet"></i>,
-        linkText: 'Budget'
+        linkText: 'Expenses'
     },
     {
         path: '/expenses',
         icon: <i class="bi bi-pie-chart"></i>,
-        linkText: 'Expenses'
+        linkText: 'Categories'
     }
     ]
 

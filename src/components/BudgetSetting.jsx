@@ -26,6 +26,7 @@ export default function BudgetSetings() {
     const budget = useSelector(getTotalBudget);
     const setTotals = categories.reduce((total, item)=> total + parseFloat(item.categoryBudget), 0)
     const serverApi = 'https://amir-react-expenses-node.onrender.com'
+    
 
 
 
@@ -120,7 +121,7 @@ export default function BudgetSetings() {
                     <Collapse in={catOpen}>
                         <form id='set-category' onSubmit={setCategory}>
                             Category Name: <input id='catName' class="form-control mr-sm-2" type='text'/>
-                            Category Max Budget: <input id='catAmount' class="form-control mr-sm-2" type='number' max={setTotals} step={0.01}/>
+                            Category Max Budget: <input id='catAmount' class="form-control mr-sm-2" type='number' max={budget} step={0.01}/>
                             <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
                                 <Button className='button' form='set-category' type='submit'>Save Changes</Button>
                             </div>

@@ -21,7 +21,7 @@ export default function Welcome(props) {
     }
 
     return (
-       <Container className='widget-container'>
+       <Container className='widget-container padding-container'>
         <Stack gap={4}>
             <h1>{props.header}</h1>
             <div style={{display: 'flex', justifyContent: 'center'}}>{ props.children }</div>

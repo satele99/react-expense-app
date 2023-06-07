@@ -36,7 +36,7 @@
 .topNav {
   display: none !important;
 }
-@media screen and (max-width: 638px){
+@media screen and (max-width: 914px){
   .main {
     display: flex;
     flex-direction: column;
@@ -49,6 +49,11 @@
   }
   .topNav {
     display: block !important;
+  }
+}
+@media screen and (min-width: 992px ){
+  .padding-container {
+    padding-left: 5rem !important;
   }
 }
 .top_section {
@@ -178,7 +183,7 @@ th, td {
   background-color: rgb(89, 173, 225) !important;
 }
 .cardbox {
-  width: 28rem;
+  /* width: 28rem; */
   height: 15rem;
   /* display: flex;
   flex-direction: column; */
