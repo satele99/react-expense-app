@@ -33,8 +33,8 @@ export default function ExpenseCard(props) {
                     <ProgressBar className='rounded-pill' min={0} max={props.budget} now={props.spent}/>
                 </Card.Text>
                 <Stack direction='horizontal' gap={2} className="row-md-5 mx-auto" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    <Link class="btn btn-outline-info blackf" onClick={openSettingModal}>Add category</Link>
-                    <Link class="btn btn-outline-info blackf" to={'/category'}>View Category</Link>
+                    <Link class="btn btn-outline-info blackf" onClick={openSettingModal}>Add Expense</Link>
+                    <Link class="btn btn-outline-info blackf" to={'/category'}>View Expenses</Link>
                 </Stack>
             </Card.Body>
         </Card>
