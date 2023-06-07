@@ -6,7 +6,6 @@ import { getTotalBudget, addCurrentSpent } from '../features/budgetInfoSlice';
 import { getExpenses } from '../features/expenseSlice';
 import { showSettingModal } from "../features/signInSlice";
 import { Button, Stack } from 'react-bootstrap';
-import '/Users/amirhali/repos/react-expenses/src/css-folder/Card.css'
 import { getCategories } from '../features/categorySlice';
 import { Link } from 'react-router-dom';
 

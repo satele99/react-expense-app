@@ -12,6 +12,8 @@ export default function LogIn() {
 
     const dispatch = useDispatch();
     const categories = useSelector(getCategories);
+    const serverApi = 'https://amir-react-expenses-node.onrender.com'
+
     const close = (event) => {
         event.preventDefault();
         const username = document.getElementById('user1');
@@ -20,13 +22,13 @@ export default function LogIn() {
             username: username.value,
             password: password.value
         }
-        axios.get(`http://localhost:4000/user/log/${user.username}`).then((response)=> {
+        axios.get(`${serverApi}/user/log/${user.username}`).then((response)=> {
             if(response.data !== 'Not found.'){
                 dispatch(closeLogIn());
                 localStorage.setItem('user', JSON.stringify(response.data));
                 dispatch(currentUser(response.data));
                 dispatch(setTotalBudget(response.data.budget));
-                axios.get(`http://localhost:4000/reload-category/${response.data.id}`).then((response)=> {
+                axios.get(`${serverApi}/reload-category/${response.data.id}`).then((response)=> {
                         if(response.data !== 'Not Found.' && categories.length === 0 ){
                             console.log('hello')
                             response.data.map((item)=> {

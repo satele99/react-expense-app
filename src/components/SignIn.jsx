@@ -1,4 +1,4 @@
-import '/Users/amirhali/repos/react-expenses/src/css-folder/SignIn.css'
+// import 'C:\Users\satel\repos\react-expense-app\src\css-folder\SignIn.css'
 import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
 import { setModal, closeSignInModal, openLogIn } from '../features/signInSlice';
@@ -11,6 +11,7 @@ import axios from 'axios';
 export default function SignIn() {
    
     const userForm = document.getElementById('form');
+    const serverApi = 'https://amir-react-expenses-node.onrender.com'
     
     const dispatch = useDispatch();
     const hide = () => {
@@ -28,10 +29,10 @@ export default function SignIn() {
             firstName: firstName.value,
             lastName: lastName.value
         }
-        axios.post('http://localhost:4000/user', user).then((response)=> {
+        axios.post(`${serverApi}/user`, user).then((response)=> {
             console.log('in api call before conditional');
             if(response.data === 'Success.'){
-                axios.get(`http://localhost:4000/user/log/${user.username}`).then((response)=> {
+                axios.get(`${serverApi}/user/log/${user.username}`).then((response)=> {
                     if(response.data === 'Not found.'){
                         alert('no user')
                     }else{

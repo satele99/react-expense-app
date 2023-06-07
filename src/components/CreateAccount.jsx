@@ -1,4 +1,4 @@
-import '/Users/amirhali/repos/react-expenses/src/css-folder/CreateAccount.css'
+// import '/Users/amirhali/repos/react-expenses/src/css-folder/CreateAccount.css'
 
 export default function CreateAccount() {
     return (

@@ -11,7 +11,8 @@ export default function CategoryForm() {
         const filter = event.target.value;
         dispatch(filterParam(filter))
     }
-    const openSettingModal = () => {
+    const openSettingModal = (e) => {
+        e.preventDefault()
         dispatch(showSettingModal())
     }
     return (

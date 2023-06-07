@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
-import '/Users/amirhali/repos/react-expenses/src/css-folder/Welcome.css'
+// import 'C:\Users\satel\repos\react-expense-app\src\css-folder\Welcome.css'
 import ExpenseCard from './ExpenseCard';
 import { useSelector } from 'react-redux';
 import { loggedUser } from '../features/callApiSlice.js';

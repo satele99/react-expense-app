@@ -4,7 +4,7 @@ import { ProgressBar, Button, Stack } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { showSettingModal } from '../features/signInSlice';
-import '/Users/amirhali/repos/react-expenses/src/css-folder/Card.css'
+// import '/Users/amirhali/repos/react-expenses/src/css-folder/Card.css'
 
 export default function ExpenseCard(props) {
 

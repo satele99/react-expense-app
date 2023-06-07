@@ -1,23 +1,17 @@
-import axios from 'axios';
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { showSettingModal, showSignInModal, openSideBar, setModal, openSignOut, openUserProfile } from "../features/signInSlice";
-import { useState } from "react";
-import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { loggedUser } from '../features/callApiSlice.js';
+import axios from 'axios';
 import { currentUser } from "../features/callApiSlice.js";
 import { setTotalBudget } from '../features/budgetInfoSlice';
 import { addCategory, getCategories } from "../features/categorySlice";
 import { addExpense } from '../features/expenseSlice';
-// import '/Users/amirhali/repos/react-expenses/src/css-folder/Sidebar.css'
+import { useEffect } from "react";
 
-export default function Sidebar(props) {
-
-    // const [isOpen, setIsOpen] = useState(false);
-    const [active, setActive] = useState(null)
+export default function NavBar() {
     const dispatch = useDispatch();
-    const sideOpen = useSelector(setModal);
     const user = useSelector(loggedUser);
     const categories = useSelector(getCategories);
     const serverApi = 'https://amir-react-expenses-node.onrender.com'
@@ -55,10 +49,6 @@ export default function Sidebar(props) {
         }
     }, [])
 
-    const toggle = () => {
-        dispatch(openSideBar())
-        
-    }
     const openSettingModal = () => {
         dispatch(showSettingModal())
     }
@@ -94,30 +84,31 @@ export default function Sidebar(props) {
         linkText: 'Expenses'
     }
     ]
-
     return (
-        <div className="side-container">
-            <div style={{width: sideOpen.sideBarOpen ? "300px" : "50px"}} className="sidebar">
-                <div className="top_section" style={{justifyContent: sideOpen.sideBarOpen ? "center": "none"}}>
-                    <h1 className="logo" style={{display: sideOpen.sideBarOpen ? "block" : "none"}}>Wallet App</h1>
-                    <div className="bar" style={{marginLeft: sideOpen.sideBarOpen ? "90px" : "0px", display: sideOpen.sideBarOpen ? "flex":"block"}}>
-                    <i class="bi bi-list" onClick={toggle}></i>
-                    </div>
-                </div>
-                {
+    <nav class="navbar navbar-expand-lg bg-body-tertiary topNav" style={{backgroundColor: '#000', marginBottom: '2rem'}}>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style={{color: '#fff'}}>Wallet App</a>
+            <button class="navbar-toggler"type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list bar" style={{color: '#fff'}}></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {
                     navItem.map((item, index)=>(
-                        <Link to={item.path} key={index} onClick={()=>setActive(item)} className={`link ${active === item && 'active'}`}>
+                        <Link to={item.path} key={index} className="link">
                             <div className="icon">{item.icon}</div>
-                            <div className="link_text" style={{display: sideOpen.sideBarOpen ? "block" : "none"}}>{item.linkText}</div>
+                            <div className="link_text">{item.linkText}</div>
                         </Link>
                     ))
-                }
-                <div className="footer" style={{flexDirection: sideOpen.sideBarOpen ? "row" : "column", justifyContent: sideOpen.sideBarOpen ? "center" : "none",marginTop: sideOpen.sideBarOpen ? "270px" : "170px", fontSize: sideOpen.sideBarOpen ? "30px" : "20px"}}>
-                    <i class="bi bi-person-circle profile" onClick={openSignInModal}></i>
-                    <i class="bi bi-gear-fill profile" onClick={openSettingModal}></i>
-                    <i class="bi bi-box-arrow-left profile" onClick={openSignOutModal}></i>
-                </div>
+            }
+            <div style={{display: 'flex', justifyContent: 'center', gap: '2rem', color: '#fff', fontSize: '20px'}}>
+                <i class="bi bi-person-circle profile" onClick={openSignInModal}></i>
+                <i class="bi bi-gear-fill profile" onClick={openSettingModal}></i>
+                <i class="bi bi-box-arrow-left profile" onClick={openSignOutModal}></i>
+            </div>
+            </ul>
             </div>
         </div>
+    </nav>
     )
 }
