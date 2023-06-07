@@ -13,6 +13,7 @@ import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
+
 export default function BudgetSetings() {
 
     const [open, setOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function BudgetSetings() {
     const categories = useSelector(getCategories);
     const budget = useSelector(getTotalBudget);
     const setTotals = categories.reduce((total, item)=> total + parseFloat(item.categoryBudget), 0)
+    const serverApi = 'https://amir-react-expenses-node.onrender.com'
 
 
 
@@ -33,7 +35,7 @@ export default function BudgetSetings() {
     const setBudget = (event)=> {
         event.preventDefault();
         const amount = document.getElementById('total-budget').value;
-        axios.put(`http://localhost:4000/total-budget/${user.username}/${amount}`).then((response)=>{
+        axios.put(`${serverApi}/total-budget/${user.username}/${amount}`).then((response)=>{
             if(response.data === 'Budget updated.'){
                 dispatch(setTotalBudget(amount));
                 alert(`budget for ${user.username} updated`);
@@ -54,9 +56,9 @@ export default function BudgetSetings() {
             catAmount: amount.value,
             uuid: uuid
         }
-        axios.post(`http://localhost:4000/category`, data).then((response)=> {
+        axios.post(`${serverApi}/category`, data).then((response)=> {
             if(response.data === 'Success'){
-                axios.get(`http://localhost:4000/get-category/${data.uuid}`).then((response)=> {
+                axios.get(`${serverApi}/get-category/${data.uuid}`).then((response)=> {
                     dispatch(addCategory(response.data))
                 })
             }
@@ -78,9 +80,9 @@ export default function BudgetSetings() {
             uuid: uuid
         }
 
-        axios.post(`http://localhost:4000/expenses`, expense).then((response)=> {
+        axios.post(`${serverApi}/expenses`, expense).then((response)=> {
             if(response.data === 'Success.'){
-                axios.get(`http://localhost:4000/get-expense/${expense.uuid}`).then((response)=> {
+                axios.get(`${serverApi}/get-expense/${expense.uuid}`).then((response)=> {
                     dispatch(addExpense(response.data))
                 })
             }
